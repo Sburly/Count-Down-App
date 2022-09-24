@@ -1,0 +1,26 @@
+:root{
+    --primary-color: #FFB800;
+    --secondary-color: #df7109;
+    --gradient: linear-gradient(to left, #FFB800, #FF820D);
+    --error-color: #FF560D;
+    --success-color: #8CFD57;
+    --light-bg-color: #FFF6DF;
+
+    --black-text: #312F2A;
+    --black-75: #64635F;
+    --black-50: #989794;
+    --black-25: #CBCBCA;
+    --black-5: #F5F5F4;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--light-bg-color);
+}
+
+.noDisplay {
+    display: none;
+}

@@ -1,12 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Count Down App</title>
-</head>
-<body>
-    <h1>Hello World</h1>
-</body>
-</html>
+<% layout('layout') %>
+<form action="/" method="post">
+    <div>
+        <label for="title">Title</label>
+        <input type="text" class="text-input" id="title" name="title">
+    </div>
+    <div>
+        <label for="date">Date</label>
+        <input type="date" class="date-input" id="date" name="date">
+    </div>
+    <div>
+        <label for="time">Time</label>
+        <input type="time" class="time-input" id="time" name="time">
+    </div>
+    <button class="submit-btn">Submit</button>
+</form>
+<% for(let date of dates) { %> 
+    <div class="date-container">
+        <hr>
+        <form class="noDisplay edit-form" id="<%= date._id %>" action="/<%= date._id %>?_method=PUT" method="post" novalidate>
+            <input type="text" name="title" value="<%= date.title %>">
+            <input type="date" name="date" value="<%= date.date %>">
+            <input type="time" name="time" value="<%= date.time %>">
+            <button class="edit-button">Edit</button>
+        </form>
+        <div class="date-display" id="<%= date._id %>">
+            <h1><%= date.title %></h1>
+            <h2><%= date.date %> <%= date.time %></h2>
+        </div>
+        <label for="<%= date._id %>">Edit</label>
+        <input type="checkbox" id="<%= date._id %>" name="<%= date._id %>">
+        <form action="/<%= date._id %>?_method=DELETE"  method="post">
+            <button class="delete-button">Delete</button>
+        </form>
+        <hr>
+    </div>
+<% } %>

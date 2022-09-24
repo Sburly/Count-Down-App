@@ -1,0 +1,37 @@
+header {
+    background: var(--gradient);
+    border-bottom: 3px solid var(--black-text);
+}
+
+.clock-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.2rem;
+}
+
+.navbar {
+    margin: 0 17rem;
+}
+
+.navbar-brand {
+    font-size: 25px;
+    font-weight: 600;
+    transition: all 400ms ease-in-out;
+}
+
+.navbar-brand:hover {
+    color: var(--black-5);
+    transform: scale(1.2);
+    text-shadow: 2px 2px var(--black-text);
+}
+
+.nav-link {
+    color: var(--black-text);
+    font-weight: 600;
+    transition: all 200ms ease-in-out;
+}
+
+.nav-link:hover {
+    color: var(--black-5);
+    text-shadow: 2px 2px var(--black-text);
+}

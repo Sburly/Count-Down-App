@@ -5,6 +5,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+// Imports
+const Date = require("./models/date");
 
 // Express App Settings
 const app = express(); // Creating the app
@@ -26,8 +28,28 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => console.log("Database connected"));
 
 // Home Page
-app.get("/", (req, res) => {
-    res.render("home");
+app.get("/", async (req, res) => {
+    const dates = await Date.find({});
+    res.render("home", { dates });
+});
+
+app.post("/", async (req, res) => {
+    if(!req.body.time) req.body.time = "00:00";
+    const date = new Date(req.body);
+    await date.save();
+    res.redirect("/");
+});
+
+app.put("/:id", async (req, res) => {
+    const { id } = req.params;
+    const date = await Date.findByIdAndUpdate(id, {...req.body}, { new: true });
+    res.redirect("/");
+});
+
+app.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    await Date.findByIdAndDelete(id);
+    res.redirect("/");
 });
 
 // App Listening
