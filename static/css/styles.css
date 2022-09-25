@@ -154,6 +154,10 @@ main {
     color: var(--black-75);
 }
 
+.delete-button:hover {
+    color: var(--black-50);
+}
+
 .form-check-input {
     filter: hue-rotate(180deg)
 }
@@ -167,6 +171,24 @@ main {
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+.flash-message {
+    border: 2px solid var(--black-text);
+    transition: var(--transition);
+    border-radius: 20px;
+}
+
+.flash-message:hover {
+    transform: scale(1.05);
+}
+
+.flash-success {
+    background: var(--success-color);
+}
+
+.flash-error {
+    background: var(--error-color);
 }
 
 .noDisplay {

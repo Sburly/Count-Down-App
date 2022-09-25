@@ -17,6 +17,7 @@
     </div>
 </form>
 <script>let datesJS = <%- JSON.stringify(dates) %>;</script>
+<%- include('./partials/flash')%>
 <% for(let date of dates) { %>
     <div class="date-container-display">
         <article class="date-container">

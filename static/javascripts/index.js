@@ -78,7 +78,7 @@ async function updateTimeDifferences() {
     };
 };
 
-const interval = 1000;
+const interval = 500;
 setInterval(() => {
     updateTimeDifferences();
 }, interval);
