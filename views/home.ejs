@@ -10,7 +10,7 @@
     </div>
     <div class="form-item-container">
         <label class="form-item-label" for="time">Time</label>
-        <input type="time" class="form-input time-input" id="time" name="time">
+        <input type="time" value="00:00:00" class="form-input time-input" id="time" name="time">
     </div>
     <div class="form-item-container">
         <button class="submit-btn">Add New</button>
@@ -31,7 +31,7 @@
                     <div class="title-datetime">
                         <h2 class="title-datetime">
                             <span class="date-title"><%= date.title %>  &#183; </span>
-                            <span class="date-datetime"><%= date.date %> <%= date.time %></span>
+                            <span class="date-datetime"><%= date.date %> at <%= date.time %></span>
                         </h2>
                     </div>
                     <form class="delete-form" action="/<%= date._id %>?_method=DELETE"  method="post">

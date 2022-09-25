@@ -7,6 +7,9 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 // Imports
 const DateDB = require("./models/date");
+const catchAsync = require("./utilities/catchAsync");
+const ExpressError = require("./utilities/ExpressError");
+const { validateEntry } = require("./middlewares");
 
 // Express App Settings
 const app = express(); // Creating the app
@@ -28,28 +31,38 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => console.log("Database connected"));
 
 // Home Page
-app.get("/", async (req, res) => {
+app.get("/", catchAsync(async (req, res) => {
     const dates = await DateDB.find({});
     res.render("home", { dates });
-});
+}));
 
-app.post("/", async (req, res) => {
+app.post("/", validateEntry, catchAsync(async (req, res) => {
     if(!req.body.time) req.body.time = "00:00";
     const date = new DateDB(req.body);
     await date.save();
     res.redirect("/");
-});
+}));
 
-app.put("/:id", async (req, res) => {
+app.put("/:id", validateEntry, catchAsync(async (req, res) => {
     const { id } = req.params;
     const date = await DateDB.findByIdAndUpdate(id, {...req.body}, { new: true });
     res.redirect("/");
-});
+}));
 
-app.delete("/:id", async (req, res) => {
+app.delete("/:id", catchAsync(async (req, res) => {
     const { id } = req.params;
     await DateDB.findByIdAndDelete(id);
     res.redirect("/");
+}));
+
+app.all("*", (req, res, next) => { // Whenever a route doen't exist we call this route
+    next(new ExpressError("Page Not found", 404));
+});
+
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = "Oh no! Something went wrong";
+    res.status(statusCode).render("error", { err });
 });
 
 // App Listening
