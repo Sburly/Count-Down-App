@@ -4,7 +4,11 @@ const Schema = mongoose.Schema;
 const DateSchema = new Schema({
     title: String,
     date: String,
-    time: String
+    time: String,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }
 });
 
 module.exports = mongoose.model("Date", DateSchema);

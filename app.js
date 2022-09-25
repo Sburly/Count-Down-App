@@ -8,11 +8,13 @@ const ejsMate = require("ejs-mate");
 const flash = require("connect-flash");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongo");
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 // Imports
-const DateDB = require("./models/date");
-const catchAsync = require("./utilities/catchAsync");
 const ExpressError = require("./utilities/ExpressError");
-const { validateEntry } = require("./middlewares");
+const datesRoutes = require("./routes/dates");
+const User = require("./models/user");
+const usersRoutes = require("./routes/users");
 
 // Express App Settings
 const app = express(); // Creating the app
@@ -59,37 +61,23 @@ app.use(session(sessionConfig));
 // Flash Messages
 app.use(flash());
 
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate())); // use the local strategy and for that local strategy the authentication method is going to be located on our user model and it's called authenticate (passport adds static methods automatically).
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // Home Page
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
 });
 
-app.get("/", catchAsync(async (req, res) => {
-    const dates = await DateDB.find({});
-    res.render("home", { dates });
-}));
-
-app.post("/", validateEntry, catchAsync(async (req, res) => {
-    if(!req.body.time) req.body.time = "00:00";
-    const date = new DateDB(req.body);
-    await date.save();
-    req.flash("success", "You've succesfully created a new entry!");
-    res.redirect("/");
-}));
-
-app.put("/:id", validateEntry, catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const date = await DateDB.findByIdAndUpdate(id, {...req.body}, { new: true });
-    res.redirect("/");
-}));
-
-app.delete("/:id", catchAsync(async (req, res) => {
-    const { id } = req.params;
-    await DateDB.findByIdAndDelete(id);
-    res.redirect("/");
-}));
+app.use("/", datesRoutes);
+app.use("/", usersRoutes);
 
 app.all("*", (req, res, next) => { // Whenever a route doen't exist we call this route
     next(new ExpressError("Page Not found", 404));
