@@ -1,37 +1,51 @@
 <% layout('layout') %>
-<form action="/" method="post">
-    <div>
-        <label for="title">Title</label>
-        <input type="text" class="text-input" id="title" name="title">
+<form class="add-new-form" action="/" method="post">
+    <div class="form-item-container">
+        <label class="form-item-label" for="title">Title</label>
+        <input type="text" placeholder="Enter Title..." class="form-input text-input" id="title" name="title">
     </div>
-    <div>
-        <label for="date">Date</label>
-        <input type="date" class="date-input" id="date" name="date">
+    <div class="form-item-container">
+        <label class="form-item-label" for="date">Date</label>
+        <input type="date" class="form-input date-input" id="date" name="date">
     </div>
-    <div>
-        <label for="time">Time</label>
-        <input type="time" class="time-input" id="time" name="time">
+    <div class="form-item-container">
+        <label class="form-item-label" for="time">Time</label>
+        <input type="time" class="form-input time-input" id="time" name="time">
     </div>
-    <button class="submit-btn">Submit</button>
+    <div class="form-item-container">
+        <button class="submit-btn">Add New</button>
+    </div>
 </form>
-<% for(let date of dates) { %> 
-    <div class="date-container">
-        <hr>
-        <form class="noDisplay edit-form" id="<%= date._id %>" action="/<%= date._id %>?_method=PUT" method="post" novalidate>
-            <input type="text" name="title" value="<%= date.title %>">
-            <input type="date" name="date" value="<%= date.date %>">
-            <input type="time" name="time" value="<%= date.time %>">
-            <button class="edit-button">Edit</button>
-        </form>
-        <div class="date-display" id="<%= date._id %>">
-            <h1><%= date.title %></h1>
-            <h2><%= date.date %> <%= date.time %></h2>
-        </div>
-        <label for="<%= date._id %>">Edit</label>
-        <input type="checkbox" id="<%= date._id %>" name="<%= date._id %>">
-        <form action="/<%= date._id %>?_method=DELETE"  method="post">
-            <button class="delete-button">Delete</button>
-        </form>
-        <hr>
+<script>let datesJS = <%- JSON.stringify(dates) %>;</script>
+<% for(let date of dates) { %>
+    <div class="date-container-display">
+        <article class="date-container">
+            <form class="noDisplay edit-form" id="<%= date._id %>" action="/<%= date._id %>?_method=PUT" method="post" novalidate>
+                <input type="text" class="form-input text-input" name="title" placeholder="Enter Title..." value="<%= date.title %>">
+                <input type="date" class="form-input date-input" name="date" value="<%= date.date %>">
+                <input type="time" class="form-input time-input" name="time" value="<%= date.time %>">
+                <button class="edit-button">Edit</button>
+            </form>
+            <div class="date-display" id="<%= date._id %>">
+                <div class="upper-display">
+                    <div class="title-datetime">
+                        <h2 class="title-datetime">
+                            <span class="date-title"><%= date.title %>  &#183; </span>
+                            <span class="date-datetime"><%= date.date %> <%= date.time %></span>
+                        </h2>
+                    </div>
+                    <form class="delete-form" action="/<%= date._id %>?_method=DELETE"  method="post">
+                        <button class="delete-button">&#10006;</button>
+                    </form>
+                </div>
+                <h3 id="<%= date._id %>" class="time-difference"></h3>
+            </div>
+            <div class="date-container-buttons">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="<%= date._id %>" name="<%= date._id %>">
+                    <label class="form-check-label" for="<%= date._id %>">Edit</label>
+                </div>
+            </div>
+        </article>
     </div>
 <% } %>

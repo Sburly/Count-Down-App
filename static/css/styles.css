@@ -11,6 +11,8 @@
     --black-50: #989794;
     --black-25: #CBCBCA;
     --black-5: #F5F5F4;
+
+    --transition: all 200ms ease-in-out;
 }
 
 body {
@@ -18,9 +20,159 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: var(--light-bg-color);
+}
+
+main {
+    width: 50rem;
+}
+
+.add-new-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2rem 0;
+    padding: 1rem;
+    background: var(--secondary-color);
+    border: 2px solid var(--black-text);
+    border-radius: 20px;
+    transition: var(--transition);
+}
+
+.add-new-form:hover {
+    transform: scale(1.05);
+    box-shadow: 4px 4px 1px 1px var(--primary-color);
+}
+
+.form-item-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-item-label {
+    color: var(--black-text);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.form-item-label:hover {
+    color: var(--black-5);
+    text-shadow: 2px 2px var(--black-text);
+}
+
+.form-input  {
+    background: var(--primary-color);
+    padding: 0.3rem 0.7rem;
+    border: 2px solid var(--black-text);
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.form-input:hover {
+    transform: scale(1.05);
+    box-shadow: 1px 1px 1px 1px var(--black-5);
+}
+
+.form-input::placeholder {
+    color: var(--black-75);
+}
+
+.submit-btn, .edit-button {
+    background: var(--primary-color);
+    align-self: baseline;
+    padding: 1rem;
+    color: var(--black-text);
+    font-weight: 600;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.edit-button {
+    padding: 1rem 1.5rem;
+}
+
+.submit-btn:hover, .edit-button:hover {
+    color: var(--black-5);
+    transform: scale(1.05);
+    box-shadow: 1px 1px 1px 1px var(--black-5);
+    text-shadow: 2px 2px var(--black-text);
+}
+
+.date-container-display {
+    border: 5px solid var(--primary-color);
+    border-radius: 20px;
+    margin: 1rem;
+    padding: 0 0.5rem 0.5rem 0.7rem;
+    background: white;
+    height: 8rem;
+    transition: var(--transition);
+}
+
+.date-container-display:hover {
+    transform: scale(1.05);
+}
+
+.upper-display {
+    display: flex;
+    align-items: space-between;
+    padding-top: 0.5rem;
+}
+
+.date-container-buttons {
+    display: flex;
+}
+
+.date-title {
+    font-size: 24px;
+}
+
+.date-datetime {
+    font-size: 16px;
+}
+
+.time-difference {
+    font-size: 16px;
+}
+
+.delete-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-left: auto;
+    padding-bottom: 0.5rem;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    color: var(--black-75);
+}
+
+.form-check-input {
+    filter: hue-rotate(180deg)
+}
+
+.form-check-input:hover {
+    filter: hue-rotate(180deg)
+}
+
+.edit-form {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .noDisplay {
     display: none;
+}
+
+.changeBorder {
+    border: 5px solid var(--secondary-color);
 }
