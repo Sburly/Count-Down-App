@@ -1,19 +1,22 @@
 <% layout('layout') %>
-<%- include('../partials/flash')%>
-<form action="/login" method="POST" class="validated-form" novalidate>
-    <div>
-        <label class="form-label" for="username">Username</label>
-        <input class="form-control" type="text" id="username" name="username" required autofocus>
-        <div class="valid-feedback">
-            Looks good!
+<div class="user-form-container">
+    <form action="/login" method="POST" class="validated-form user-form" novalidate>
+        <h1 class="user-form-title">Log in</h1>
+        <div class="form-group-container">
+            <label class="form-label form-item-label" for="username">Username</label>
+            <input class="form-control form-input" type="text" id="username" name="username" required autofocus>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
         </div>
-    </div>
-    <div>
-        <label class="form-label" for="password">Password</label>
-        <input class="form-control" type="password" id="password" name="password" required>
-        <div class="valid-feedback">
-            Looks good!
+        <div class="form-group-container">
+            <label class="form-label form-item-label" for="password">Password</label>
+            <input class="form-control form-input" type="password" id="password" name="password" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
         </div>
-    </div>
-    <button>Log in</button>
-</form>
+        <%- include('../partials/flash')%>
+        <button class="user-form-button">Log in</button>
+    </form>
+</div>

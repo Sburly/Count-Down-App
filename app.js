@@ -10,6 +10,7 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongo");
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const mongoSanitize = require("express-mongo-sanitize");
 // Imports
 const ExpressError = require("./utilities/ExpressError");
 const datesRoutes = require("./routes/dates");
@@ -67,6 +68,9 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate())); // use the local strategy and for that local strategy the authentication method is going to be located on our user model and it's called authenticate (passport adds static methods automatically).
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// Security
+app.use(mongoSanitize({ replaceWith: "_" })); // it's not gonna allow keys that contain $ or . and replace then with _
 
 // Home Page
 app.use((req, res, next) => {
